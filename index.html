@@ -37,6 +37,8 @@
             --border-hover: #cbd5e1;
             --primary: #2980b9;
             --primary-hover: #1c5985;
+            --namu-color: #00a495;
+            --namu-hover: #00877a;
             --btn-bg: #f1f5f9;
             --btn-text: #475569;
             
@@ -58,6 +60,8 @@
             --border-hover: #475569;
             --primary: #3b82f6;
             --primary-hover: #60a5fa;
+            --namu-color: #00c4b2;
+            --namu-hover: #00e0cb;
             --btn-bg: #334155;
             --btn-text: #f8fafc;
 
@@ -262,6 +266,49 @@
             color: white;
         }
 
+        /* 오른쪽: 본문 읽기 뷰어 상단 타이틀 영역 */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+        .content-header h1 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            margin: 0;
+            color: var(--wiki-heading);
+        }
+        
+        /* 🌳 나무위키 이동 버튼 스타일 */
+        .namu-btn {
+            background-color: var(--namu-color);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-family: 'LINESeedKR-Bd', sans-serif;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0, 164, 149, 0.15);
+            transition: all 0.2s;
+        }
+        .namu-btn:hover {
+            background-color: var(--namu-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 164, 149, 0.25);
+            color: white;
+        }
+
         /* 오른쪽: 본문 읽기 뷰어 */
         #content-view {
             flex: 3;
@@ -272,16 +319,6 @@
             display: none; 
             overflow-x: hidden;
             border: 1px solid var(--border-color);
-        }
-
-        #content-view h1 {
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 700;
-            font-size: 32px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-top: 0;
-            color: var(--wiki-heading);
         }
         
         .wiki-body {
@@ -400,7 +437,7 @@
             font-style: italic;
         }
 
-        /* ⬆️ 위로 가기 버튼 */
+        /* 위로 가기 버튼 */
         #scrollTopBtn {
             display: none;
             position: fixed;
@@ -420,11 +457,13 @@
         }
         #scrollTopBtn:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
 
-        /* 📱 모바일 반응형 웹 지원 */
+        /* 모바일 반응형 웹 지원 */
         @media (max-width: 768px) {
             .main-layout { flex-direction: column; }
             #results { max-width: 100%; min-width: auto; }
             #content-view { padding: 25px; }
+            .content-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .namu-btn { width: 100%; justify-content: center; }
             .wiki-body .infobox, .wiki-body .thumb { float: none; width: 100%; margin: 0 0 20px 0; }
         }
     </style>
@@ -683,8 +722,14 @@
             const contentView = document.getElementById('content-view');
             const loadingIndicator = document.getElementById('loading');
             
+            // 🌳 나무위키 이동 링크 생성 (새 탭에서 열기)
+            const namuUrl = `https://namu.wiki/w/${encodeURIComponent(title)}`;
+            
             contentView.innerHTML = `
-                <h1>${title}</h1>
+                <div class="content-header">
+                    <h1>${title}</h1>
+                    <a href="${namuUrl}" target="_blank" class="namu-btn">🌳 나무위키에서 찾기</a>
+                </div>
                 <div class="wiki-body">${html}</div>
             `;
             
