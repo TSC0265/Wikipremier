@@ -120,6 +120,12 @@
             margin: 0;
             font-size: 28px;
             color: var(--text-main);
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: inline-block;
+        }
+        .header h1:hover {
+            opacity: 0.7;
         }
 
         /* 검색 영역 */
@@ -147,18 +153,28 @@
             background: transparent;
             color: var(--text-main);
         }
-        #searchBtn {
-            padding: 0 30px;
-            font-size: 16px;
+        #searchBtn, #namuSearchBtn {
+            padding: 0 20px;
+            font-size: 15px;
             font-family: 'LINESeedKR-Bd', sans-serif;
-            background-color: var(--primary);
             color: white;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        #searchBtn {
+            background-color: var(--primary);
         }
         #searchBtn:hover {
             background-color: var(--primary-hover);
+        }
+        #namuSearchBtn {
+            background-color: var(--namu-color);
+            border-left: 1px solid rgba(255,255,255,0.2);
+        }
+        #namuSearchBtn:hover {
+            background-color: var(--namu-hover);
         }
 
         /* 최근 검색어 영역 */
@@ -242,28 +258,47 @@
             line-height: 1.6;
             margin-bottom: 18px;
         }
-        .searchmatch {
-            font-weight: bold;
-            color: #e74c3c;
-            background-color: rgba(231, 76, 60, 0.1);
-            padding: 0 2px;
-            border-radius: 3px;
+        
+        /* 목록 내 버튼 그룹 */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
         }
         .view-btn {
             background-color: var(--btn-bg);
             color: var(--btn-text);
             border: none;
-            padding: 10px 18px;
+            padding: 10px;
             font-size: 14px;
             font-family: 'LINESeedKR-Bd', sans-serif;
             border-radius: 8px;
             cursor: pointer;
-            width: 100%;
+            flex: 1;
             transition: all 0.2s;
         }
         .view-btn:hover {
             background-color: var(--primary);
             color: white;
+        }
+        .namu-list-btn {
+            background-color: var(--namu-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 13px;
+            font-family: 'LINESeedKR-Bd', sans-serif;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .namu-list-btn:hover {
+            background-color: var(--namu-hover);
         }
 
         /* 오른쪽: 본문 읽기 뷰어 상단 타이틀 영역 */
@@ -284,7 +319,7 @@
             color: var(--wiki-heading);
         }
         
-        /* 🌳 나무위키 이동 버튼 스타일 */
+        /* 🌳 본문용 나무위키 이동 버튼 스타일 */
         .namu-btn {
             background-color: var(--namu-color);
             color: white;
@@ -321,121 +356,23 @@
             border: 1px solid var(--border-color);
         }
         
-        .wiki-body {
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--wiki-text);
-            font-weight: 400;
-        }
-
-        .wiki-body img {
-            max-width: 100% !important;
-            height: auto !important;
-            border-radius: 8px;
-        }
-
-        .wiki-body a {
-            text-decoration: none;
-            color: var(--wiki-link);
-            font-weight: 500;
-            padding: 2px 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease-in-out;
-            border-bottom: 1.5px solid transparent;
-        }
-        .wiki-body a:hover {
-            color: var(--wiki-link-hover);
-            border-bottom: 1.5px solid var(--wiki-link-hover);
-            background-color: rgba(2, 132, 199, 0.1);
-        }
-
-        .wiki-body .infobox {
-            float: right;
-            clear: right;
-            margin: 0 0 20px 20px;
-            background-color: var(--wiki-infobox);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            font-size: 14px;
-            width: 320px;
-            max-width: 100%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border-collapse: separate;
-            border-spacing: 0;
-            overflow: hidden;
-        }
-        .wiki-body .infobox th {
-            background-color: var(--wiki-infobox-header);
-            padding: 10px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--wiki-heading);
-        }
-        .wiki-body .infobox td {
-            padding: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .wiki-body .thumb {
-            float: right;
-            clear: right;
-            margin: 0 0 20px 20px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            text-align: center;
-        }
+        .wiki-body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; font-size: 16px; line-height: 1.8; color: var(--wiki-text); font-weight: 400; }
+        .wiki-body img { max-width: 100% !important; height: auto !important; border-radius: 8px; }
+        .wiki-body a { text-decoration: none; color: var(--wiki-link); font-weight: 500; padding: 2px 4px; border-radius: 4px; transition: all 0.2s ease-in-out; border-bottom: 1.5px solid transparent; }
+        .wiki-body a:hover { color: var(--wiki-link-hover); border-bottom: 1.5px solid var(--wiki-link-hover); background-color: rgba(2, 132, 199, 0.1); }
+        .wiki-body .infobox { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--wiki-infobox); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 14px; width: 320px; max-width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-collapse: separate; border-spacing: 0; overflow: hidden; }
+        .wiki-body .infobox th { background-color: var(--wiki-infobox-header); padding: 10px; border-bottom: 1px solid var(--border-color); color: var(--wiki-heading); }
+        .wiki-body .infobox td { padding: 10px; border-bottom: 1px solid var(--border-color); }
+        .wiki-body .thumb { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center; }
         .wiki-body .thumbinner { border: none !important; background: transparent !important; width: auto !important; }
         .wiki-body .thumbcaption { font-size: 13px; color: var(--text-sub); padding-top: 8px; text-align: left; }
-
-        .wiki-body .toc {
-            background: var(--wiki-infobox);
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            display: inline-block;
-            margin: 20px 0;
-            border-radius: 16px;
-        }
+        .wiki-body .toc { background: var(--wiki-infobox); border: 1px solid var(--border-color); padding: 25px; display: inline-block; margin: 20px 0; border-radius: 16px; }
         .wiki-body .toc h2 { margin-top: 0; border: none; font-size: 18px; font-weight: 700; }
         .wiki-body .toc ul { list-style-type: none; padding-left: 20px; }
-
-        .wiki-body h2 {
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 700;
-            font-size: 24px;
-            color: var(--wiki-heading);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
-            margin-top: 2em;
-            margin-bottom: 1em;
-            scroll-margin-top: 20px; 
-        }
-        .wiki-body h3 {
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
-            color: var(--wiki-heading);
-            margin-top: 1.5em;
-            scroll-margin-top: 20px;
-        }
-        
-        .wiki-body .mw-editsection,
-        .wiki-body .reference,
-        .wiki-body .navbox,
-        .wiki-body .metadata { display: none; }
-        
-        .wiki-body blockquote {
-            background: var(--wiki-infobox);
-            border-left: 5px solid var(--primary);
-            margin: 1.5em 0;
-            padding: 15px 20px;
-            border-radius: 0 12px 12px 0;
-            color: var(--text-sub);
-            font-style: italic;
-        }
+        .wiki-body h2 { font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 24px; color: var(--wiki-heading); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-top: 2em; margin-bottom: 1em; scroll-margin-top: 20px; }
+        .wiki-body h3 { font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 20px; color: var(--wiki-heading); margin-top: 1.5em; scroll-margin-top: 20px; }
+        .wiki-body .mw-editsection, .wiki-body .reference, .wiki-body .navbox, .wiki-body .metadata { display: none; }
+        .wiki-body blockquote { background: var(--wiki-infobox); border-left: 5px solid var(--primary); margin: 1.5em 0; padding: 15px 20px; border-radius: 0 12px 12px 0; color: var(--text-sub); font-style: italic; }
 
         /* 위로 가기 버튼 */
         #scrollTopBtn {
@@ -459,6 +396,12 @@
 
         /* 모바일 반응형 웹 지원 */
         @media (max-width: 768px) {
+            .search-container { flex-wrap: wrap; border-radius: 15px; }
+            #searchInput { width: 100%; border-radius: 15px 15px 0 0; padding: 15px; }
+            #searchBtn, #namuSearchBtn { flex: 1; padding: 15px 0; }
+            #searchBtn { border-radius: 0 0 0 15px; }
+            #namuSearchBtn { border-radius: 0 0 15px 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.2); }
+            
             .main-layout { flex-direction: column; }
             #results { max-width: 100%; min-width: auto; }
             #content-view { padding: 25px; }
@@ -474,13 +417,15 @@
 
     <div class="header">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/220px-Wikipedia-logo-v2.svg.png" alt="위키백과 로고">
-        <h1>위키백과 뷰어 Premier</h1>
+        <h1 onclick="goHome()">위키백과 뷰어 Premier</h1>
     </div>
 
+    <!-- 💡 검색창: 위키백과 버튼과 나무위키 바로 검색 버튼 분리 -->
     <div class="search-wrapper">
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="궁금한 지식을 검색해 보세요..." onkeypress="handleKeyPress(event)">
-            <button id="searchBtn" onclick="searchWikipedia()">검색</button>
+            <button id="searchBtn" onclick="searchWikipedia()">위키 검색</button>
+            <button id="namuSearchBtn" onclick="searchNamuwikiDirect()">나무 검색</button>
         </div>
     </div>
 
@@ -501,6 +446,13 @@
     <script>
         const articleCache = {}; 
         let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+
+        // 💡 메인 로고 클릭 시 초기 화면으로
+        function goHome() {
+            document.getElementById('content-view').style.display = 'none';
+            history.pushState(null, '', window.location.pathname);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // 🌙 다크모드 초기화 및 토글 로직
         function initTheme() {
@@ -572,6 +524,17 @@
             }
         }
 
+        // 💡 메인 검색창에서 나무위키 바로 검색
+        function searchNamuwikiDirect() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                alert('검색어를 입력해주세요!');
+                return;
+            }
+            addRecentSearch(query);
+            window.open(`https://namu.wiki/w/${encodeURIComponent(query)}`, '_blank');
+        }
+
         async function searchWikipedia() {
             const query = document.getElementById('searchInput').value.trim();
             const resultsContainer = document.getElementById('results');
@@ -603,14 +566,20 @@
                     return;
                 }
 
+                // 💡 리스트 항목에 "나무위키 보기" 버튼 추가 렌더링
                 searchResults.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
                     
+                    const namuUrl = `https://namu.wiki/w/${encodeURIComponent(result.title)}`;
+                    
                     resultItem.innerHTML = `
                         <h2 class="result-title">${result.title}</h2>
                         <div class="result-snippet">${result.snippet}...</div>
-                        <button class="view-btn" onclick="fetchArticleContent('${result.title.replace(/'/g, "\\'")}')">본문 읽기</button>
+                        <div class="action-buttons">
+                            <button class="view-btn" onclick="fetchArticleContent('${result.title.replace(/'/g, "\\'")}')">위키백과 읽기</button>
+                            <a href="${namuUrl}" target="_blank" class="namu-list-btn">🌳 나무위키 보기</a>
+                        </div>
                     `;
                     resultsContainer.appendChild(resultItem);
                 });
@@ -628,7 +597,6 @@
             loadingIndicator.style.display = 'block';
             contentView.style.display = 'none';
 
-            // 🔙 History API URL 업데이트 (로컬 file:// 환경 오류 방지 처리)
             if (pushHistory) {
                 try {
                     history.pushState({ title: title }, title, `?article=${encodeURIComponent(title)}`);
@@ -658,7 +626,6 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(articleHtml, 'text/html');
 
-                // 이미지 처리
                 const images = doc.querySelectorAll('img');
                 images.forEach(img => {
                     img.setAttribute('loading', 'lazy');
@@ -685,7 +652,6 @@
                     }
                 });
 
-                // 링크 처리
                 const links = doc.querySelectorAll('a');
                 links.forEach(link => {
                     const href = link.getAttribute('href');
@@ -722,7 +688,6 @@
             const contentView = document.getElementById('content-view');
             const loadingIndicator = document.getElementById('loading');
             
-            // 🌳 나무위키 이동 링크 생성 (새 탭에서 열기)
             const namuUrl = `https://namu.wiki/w/${encodeURIComponent(title)}`;
             
             contentView.innerHTML = `
@@ -751,12 +716,10 @@
             }
         }
 
-        // 초기화 실행
         window.addEventListener('DOMContentLoaded', () => {
             initTheme();
             updateRecentSearchesUI();
 
-            // URL 파라미터 확인 (공유된 링크나 새로고침 대응)
             const urlParams = new URLSearchParams(window.location.search);
             const articleParam = urlParams.get('article');
             if (articleParam) {
