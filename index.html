@@ -29,49 +29,56 @@
 
         /* 🌙 다크 모드 및 테마 변수 설정 */
         :root {
-            --bg-color: #f4f7f9;
-            --text-main: #2c3e50;
+            /* 리퀴드 글래스 효과를 극대화하기 위해 메인 배경을 약간 더 생동감 있게 조정 */
+            --bg-color: #eef2f7; 
+            --text-main: #1e293b;
             --text-sub: #64748b;
-            --card-bg: white;
-            --border-color: #edf2f7;
-            --border-hover: #cbd5e1;
+            --card-bg: rgba(255, 255, 255, 0.45); /* 유리 베이스 */
+            --border-color: rgba(255, 255, 255, 0.5); /* 유리 테두리 */
+            --border-hover: rgba(255, 255, 255, 0.8);
             --primary: #2980b9;
             --primary-hover: #1c5985;
             --namu-color: #00a495;
             --namu-hover: #00877a;
-            --btn-bg: #f1f5f9;
+            --btn-bg: rgba(15, 23, 42, 0.05);
             --btn-text: #475569;
             
             /* 위키 본문용 */
             --wiki-text: #334155;
-            --wiki-heading: #1e293b;
+            --wiki-heading: #0f172a;
             --wiki-link: #0284c7;
             --wiki-link-hover: #0369a1;
-            --wiki-infobox: #f8fafc;
-            --wiki-infobox-header: #f1f5f9;
+            --wiki-infobox: rgba(255, 255, 255, 0.3);
+            --wiki-infobox-header: rgba(15, 23, 42, 0.04);
+            
+            /* 유리 가치 효과의 핵심인 블러 강도 지정 */
+            --glass-blur: blur(25px) saturate(190%);
+            --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.4);
         }
 
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-main: #e2e8f0;
+            --bg-color: #0b0f17;
+            --text-main: #f1f5f9;
             --text-sub: #94a3b8;
-            --card-bg: #1e1e1e;
-            --border-color: #334155;
-            --border-hover: #475569;
+            --card-bg: rgba(22, 28, 45, 0.6); /* 다크 스페이스 글래스 */
+            --border-color: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(255, 255, 255, 0.15);
             --primary: #3b82f6;
             --primary-hover: #60a5fa;
             --namu-color: #00c4b2;
             --namu-hover: #00e0cb;
-            --btn-bg: #334155;
-            --btn-text: #f8fafc;
+            --btn-bg: rgba(255, 255, 255, 0.07);
+            --btn-text: #e2e8f0;
 
             /* 위키 본문용 */
             --wiki-text: #cbd5e1;
             --wiki-heading: #f8fafc;
             --wiki-link: #38bdf8;
             --wiki-link-hover: #7dd3fc;
-            --wiki-infobox: #1e293b;
-            --wiki-infobox-header: #334155;
+            --wiki-infobox: rgba(0, 0, 0, 0.2);
+            --wiki-infobox-header: rgba(255, 255, 255, 0.05);
+            
+            --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08);
         }
 
         /* 기본 스타일 */
@@ -85,25 +92,30 @@
             align-items: center;
             color: var(--text-main);
             transition: background-color 0.3s, color 0.3s;
+            /* 배경 스크롤 시 유리 효과 아래로 비쳐보이도록 배경 패턴 부여 가능 */
+            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
         }
         
-        /* 다크모드 토글 버튼 */
+        /* 🧪 다크모드 토글 버튼 (리퀴드 글래스 적용) */
         .theme-toggle {
             position: absolute;
             top: 20px;
             right: 20px;
             background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-color);
-            padding: 10px 15px;
+            padding: 10px 18px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'LINESeedKR-Bd', sans-serif;
             color: var(--text-main);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.2s;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .theme-toggle:hover {
             border-color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .header {
@@ -128,7 +140,7 @@
             opacity: 0.7;
         }
 
-        /* 검색 영역 */
+        /* 🔍 검색 영역 (유리 효과 제외하여 불투명 선명도 유지) */
         .search-wrapper {
             width: 100%;
             max-width: 650px;
@@ -137,11 +149,17 @@
         .search-container {
             display: flex;
             width: 100%;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
             border-radius: 30px;
             overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            /* 유리 효과를 배제한 완전한 Solid 스타일 불투명 처리 */
+            background: [data-theme="dark"] ? #1e293b : #ffffff;
+            border: 1px solid [data-theme="dark"] ? #334155 : #e2e8f0;
+        }
+        /* 다크모드 하드코딩 처리 */
+        [data-theme="dark"] .search-container {
+            background: #1e1e1e;
+            border-solid: 1px solid #334155;
         }
         #searchInput {
             flex-grow: 1;
@@ -153,8 +171,8 @@
             background: transparent;
             color: var(--text-main);
         }
-        #searchBtn, #namuSearchBtn {
-            padding: 0 20px;
+        #searchBtn {
+            padding: 0 25px;
             font-size: 15px;
             font-family: 'LINESeedKR-Bd', sans-serif;
             color: white;
@@ -162,22 +180,13 @@
             cursor: pointer;
             transition: background-color 0.3s;
             white-space: nowrap;
-        }
-        #searchBtn {
             background-color: var(--primary);
         }
         #searchBtn:hover {
             background-color: var(--primary-hover);
         }
-        #namuSearchBtn {
-            background-color: var(--namu-color);
-            border-left: 1px solid rgba(255,255,255,0.2);
-        }
-        #namuSearchBtn:hover {
-            background-color: var(--namu-hover);
-        }
-
-        /* 최근 검색어 영역 */
+        
+        /* 💾 최근 검색어 태그 (리퀴드 글래스 적용) */
         .recent-searches {
             display: flex;
             flex-wrap: wrap;
@@ -187,17 +196,21 @@
         }
         .recent-tag {
             background-color: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             color: var(--text-sub);
             border: 1px solid var(--border-color);
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .recent-tag:hover {
             border-color: var(--primary);
             color: var(--primary);
+            transform: translateY(-1px);
         }
 
         /* 로딩 스피너 애니메이션 */
@@ -226,7 +239,7 @@
             gap: 30px;
         }
 
-        /* 왼쪽: 검색 결과 리스트 */
+        /* 📋 왼쪽: 검색 결과 리스트 항목 (리퀴드 글래스 적용) */
         #results {
             flex: 1;
             min-width: 320px;
@@ -234,16 +247,20 @@
         }
         .result-item {
             background-color: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             padding: 22px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-radius: 18px;
+            box-shadow: var(--glass-shadow);
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1), 
+                        box-shadow 0.25s ease, 
+                        border-color 0.25s ease;
         }
         .result-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255,255,255,0.6);
             border-color: var(--border-hover);
         }
         .result-title {
@@ -271,7 +288,7 @@
             padding: 10px;
             font-size: 14px;
             font-family: 'LINESeedKR-Bd', sans-serif;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             flex: 1;
             transition: all 0.2s;
@@ -287,7 +304,7 @@
             padding: 10px;
             font-size: 13px;
             font-family: 'LINESeedKR-Bd', sans-serif;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             flex: 1;
             text-decoration: none;
@@ -301,7 +318,20 @@
             background-color: var(--namu-hover);
         }
 
-        /* 오른쪽: 본문 읽기 뷰어 상단 타이틀 영역 */
+        /* 📖 오른쪽: 본문 읽기 뷰어 (리퀴드 글래스 대형 카드 적용) */
+        #content-view {
+            flex: 3;
+            background-color: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+            display: none; 
+            overflow-x: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
         .content-header {
             display: flex;
             justify-content: space-between;
@@ -319,7 +349,6 @@
             color: var(--wiki-heading);
         }
         
-        /* 🌳 본문용 나무위키 이동 버튼 스타일 */
         .namu-btn {
             background-color: var(--namu-color);
             color: white;
@@ -344,29 +373,19 @@
             color: white;
         }
 
-        /* 오른쪽: 본문 읽기 뷰어 */
-        #content-view {
-            flex: 3;
-            background-color: var(--card-bg);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            display: none; 
-            overflow-x: hidden;
-            border: 1px solid var(--border-color);
-        }
-        
         .wiki-body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; font-size: 16px; line-height: 1.8; color: var(--wiki-text); font-weight: 400; }
         .wiki-body img { max-width: 100% !important; height: auto !important; border-radius: 8px; }
         .wiki-body a { text-decoration: none; color: var(--wiki-link); font-weight: 500; padding: 2px 4px; border-radius: 4px; transition: all 0.2s ease-in-out; border-bottom: 1.5px solid transparent; }
         .wiki-body a:hover { color: var(--wiki-link-hover); border-bottom: 1.5px solid var(--wiki-link-hover); background-color: rgba(2, 132, 199, 0.1); }
-        .wiki-body .infobox { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--wiki-infobox); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 14px; width: 320px; max-width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-collapse: separate; border-spacing: 0; overflow: hidden; }
+        
+        /* 인포박스 등 내부 모듈도 투명 흐림 적용 */
+        .wiki-body .infobox { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--wiki-infobox); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 14px; padding: 15px; font-size: 14px; width: 320px; max-width: 100%; box-shadow: var(--glass-shadow); border-collapse: separate; border-spacing: 0; overflow: hidden; }
         .wiki-body .infobox th { background-color: var(--wiki-infobox-header); padding: 10px; border-bottom: 1px solid var(--border-color); color: var(--wiki-heading); }
         .wiki-body .infobox td { padding: 10px; border-bottom: 1px solid var(--border-color); }
-        .wiki-body .thumb { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center; }
+        .wiki-body .thumb { float: right; clear: right; margin: 0 0 20px 20px; background-color: var(--wiki-infobox); border: 1px solid var(--border-color); border-radius: 14px; padding: 8px; box-shadow: var(--glass-shadow); text-align: center; }
         .wiki-body .thumbinner { border: none !important; background: transparent !important; width: auto !important; }
         .wiki-body .thumbcaption { font-size: 13px; color: var(--text-sub); padding-top: 8px; text-align: left; }
-        .wiki-body .toc { background: var(--wiki-infobox); border: 1px solid var(--border-color); padding: 25px; display: inline-block; margin: 20px 0; border-radius: 16px; }
+        .wiki-body .toc { background: var(--wiki-infobox); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border-color); padding: 25px; display: inline-block; margin: 20px 0; border-radius: 18px; box-shadow: var(--glass-shadow); }
         .wiki-body .toc h2 { margin-top: 0; border: none; font-size: 18px; font-weight: 700; }
         .wiki-body .toc ul { list-style-type: none; padding-left: 20px; }
         .wiki-body h2 { font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: 24px; color: var(--wiki-heading); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-top: 2em; margin-bottom: 1em; scroll-margin-top: 20px; }
@@ -374,31 +393,65 @@
         .wiki-body .mw-editsection, .wiki-body .reference, .wiki-body .navbox, .wiki-body .metadata { display: none; }
         .wiki-body blockquote { background: var(--wiki-infobox); border-left: 5px solid var(--primary); margin: 1.5em 0; padding: 15px 20px; border-radius: 0 12px 12px 0; color: var(--text-sub); font-style: italic; }
 
-        /* 위로 가기 버튼 */
-        #scrollTopBtn {
-            display: none;
+        /* ✨ Windows 11 / iOS 매시업 아크릴 가치 내비게이션 바 */
+        .scroll-nav {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            right: 25px;
+            bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 8px;
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--border-color);
             z-index: 99;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .scroll-nav {
+            background: rgba(30, 30, 30, 0.6);
+        }
+
+        #scrollTopBtn, #scrollBottomBtn {
+            display: none;
+            position: static;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border-radius: 12px;
+            background: transparent;
             border: none;
-            outline: none;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 800; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), 
+                        background-color 0.2s ease, 
+                        color 0.2s ease;
+        }
+
+        #scrollTopBtn:hover, #scrollBottomBtn:hover {
             background-color: var(--primary);
             color: white;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 18px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: background-color 0.3s, transform 0.2s;
+            transform: scale(1.12);
         }
-        #scrollTopBtn:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
+
+        #scrollTopBtn:active, #scrollBottomBtn:active {
+            transform: scale(0.95);
+        }
 
         /* 모바일 반응형 웹 지원 */
         @media (max-width: 768px) {
             .search-container { flex-wrap: wrap; border-radius: 15px; }
             #searchInput { width: 100%; border-radius: 15px 15px 0 0; padding: 15px; }
-            #searchBtn, #namuSearchBtn { flex: 1; padding: 15px 0; }
+            #searchBtn { flex: 1; padding: 15px 0; }
             #searchBtn { border-radius: 0 0 0 15px; }
             #namuSearchBtn { border-radius: 0 0 15px 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.2); }
             
@@ -420,12 +473,10 @@
         <h1 onclick="goHome()">위키백과 뷰어 Premier</h1>
     </div>
 
-    <!-- 💡 검색창: 위키백과 버튼과 나무위키 바로 검색 버튼 분리 -->
     <div class="search-wrapper">
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="궁금한 지식을 검색해 보세요..." onkeypress="handleKeyPress(event)">
-            <button id="searchBtn" onclick="searchWikipedia()">위키 검색</button>
-            <button id="namuSearchBtn" onclick="searchNamuwikiDirect()">나무 검색</button>
+            <button id="searchBtn" onclick="searchWikipedia()">검색</button>
         </div>
     </div>
 
@@ -441,20 +492,21 @@
         <div id="content-view"></div>
     </div>
 
-    <button id="scrollTopBtn" onclick="scrollToTop()" title="위로 가기">↑</button>
+    <div class="scroll-nav">
+        <button id="scrollTopBtn" onclick="scrollToTop()" title="위로">↑</button>
+        <button id="scrollBottomBtn" onclick="scrollToBottom()" title="아래로">↓</button>
+    </div>
 
     <script>
         const articleCache = {}; 
         let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
 
-        // 💡 메인 로고 클릭 시 초기 화면으로
         function goHome() {
             document.getElementById('content-view').style.display = 'none';
             history.pushState(null, '', window.location.pathname);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 🌙 다크모드 초기화 및 토글 로직
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -472,7 +524,6 @@
             document.getElementById('themeToggleBtn').textContent = newTheme === 'dark' ? '☀️ 라이트 모드' : '🌙 다크 모드';
         }
 
-        // 💾 최근 검색어 UI 업데이트 및 추가 로직
         function updateRecentSearchesUI() {
             const container = document.getElementById('recent-searches');
             container.innerHTML = '';
@@ -488,27 +539,24 @@
             });
         }
         function addRecentSearch(query) {
-            recentSearches = recentSearches.filter(item => item !== query); // 중복 제거
-            recentSearches.unshift(query); // 맨 앞에 추가
-            if (recentSearches.length > 5) recentSearches.pop(); // 최대 5개 유지
+            recentSearches = recentSearches.filter(item => item !== query);
+            recentSearches.unshift(query);
+            if (recentSearches.length > 5) recentSearches.pop();
             localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
             updateRecentSearchesUI();
         }
 
-        // ⬆️ 위로 가기 스크롤 이벤트
         window.onscroll = function() {
             const btn = document.getElementById("scrollTopBtn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                btn.style.display = "block";
+                btn.style.display="flex"; document.getElementById("scrollBottomBtn").style.display="flex";
             } else {
-                btn.style.display = "none";
+                btn.style.display="none"; document.getElementById("scrollBottomBtn").style.display="none";
             }
         };
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function scrollToTop(){window.scrollTo({top:0,behavior:"smooth"});}
+        function scrollToBottom(){window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"});}
 
-        // 🔙 브라우저 뒤로 가기 (History API) 이벤트 리스너
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.title) {
                 fetchArticleContent(event.state.title, false); 
@@ -517,22 +565,10 @@
             }
         });
 
-        // 엔터키 검색
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchWikipedia();
             }
-        }
-
-        // 💡 메인 검색창에서 나무위키 바로 검색
-        function searchNamuwikiDirect() {
-            const query = document.getElementById('searchInput').value.trim();
-            if (!query) {
-                alert('검색어를 입력해주세요!');
-                return;
-            }
-            addRecentSearch(query);
-            window.open(`https://namu.wiki/w/${encodeURIComponent(query)}`, '_blank');
         }
 
         async function searchWikipedia() {
@@ -566,7 +602,6 @@
                     return;
                 }
 
-                // 💡 리스트 항목에 "나무위키 보기" 버튼 추가 렌더링
                 searchResults.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.className = 'result-item';
